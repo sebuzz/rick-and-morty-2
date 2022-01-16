@@ -24,8 +24,12 @@ const Home = () => {
 			.then(response => response.json())
 			.then(json => {
 				console.log("PAGE ");
+				const fetchedArray = json.results;
+				// fetchedArray.forEach(function (item){
+				// 	item.favorite = false;
+				// });
 
-				setCharacters(json.results);
+				setCharacters(fetchedArray);
 			})
 			.catch(error_ => {
 				// setError(error_);

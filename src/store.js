@@ -1,6 +1,7 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 
+// const characters = useStore(state => state.characters);
 // const store = set => ({
 export const useStore = create(set => ({
 	characters: [
@@ -8,6 +9,7 @@ export const useStore = create(set => ({
 			id: 0,
 			name: "Rick Sanchez jr",
 			image: "#",
+			favorite: false,
 		},
 	],
 
@@ -17,6 +19,12 @@ export const useStore = create(set => ({
 			characters: [...state.characters, ...characters],
 		}));
 	},
+	updateCharacter: (character) => {
+
+		console.log("updating character: ", character);
+		character.favorite = (!character.favorite);
+		// console.log("character favorite: ", characters.id.favorite);
+	}
 }));
 
 // const useStore = create(devtools(store));

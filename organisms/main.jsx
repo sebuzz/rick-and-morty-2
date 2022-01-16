@@ -7,6 +7,7 @@ import { useStore } from "../src/store";
 
 const Main = () => {
 	const characters = useStore(state => state.characters);
+	const update = useStore((state) => state.updateCharacter);
 	console.log("characters--> ", characters);
 	return (
 		<main>
@@ -28,6 +29,11 @@ const Main = () => {
 								</div>
 								{/* Card Button*/}
 								<button>add to favourites</button>
+								<input type="checkbox" name="favorite" onClick={() => {
+									// character.favorite = (!character.favorite);
+									update(character);
+
+								}}/>
 							</div>
 						</div>
 					);
