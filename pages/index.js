@@ -7,7 +7,8 @@ import { useStore } from "../src/store";
 
 
 
-const myURL = "https://rickandmortyapi.com/api/character/?page=3";
+
+const myURL = "https://rickandmortyapi.com/api/character/?page=";
 
 const Home = () => {
 	const myCharacters = useStore(state => state.characters);
@@ -17,17 +18,36 @@ const Home = () => {
 	// const [characters, setCharacters] = useState([]);
 	const characters = useStore(state => state.characters);
 	const setCharacters = useStore(state => state.setCharacters);
-
+	const update = useStore(state => state.toggleFavorite);
+	const setFavorite = useStore(state => state.setFavorite);
+	const counter = useStore(state => state.counter);
+console.log("counter: ", counter);
 	/* Fetch process*/
 	useEffect(() => {
-		fetch(myURL)
+		fetch(myURL + counter)
 			.then(response => response.json())
 			.then(json => {
-				console.log("PAGE ");
+				console.log("PAGE ", counter);
 				const fetchedArray = json.results;
-				// fetchedArray.forEach(function (item){
-				// 	item.favorite = false;
-				// });
+				// for every character that was fetched...
+				fetchedArray.forEach(function (item){
+					// check if it was previously stored
+					const storageKey = "rick-morty-" + item.id;
+					// if not, add the 'favorite property'
+					if (!window.localStorage.getItem(storageKey)) {
+						item.favorite = false;
+						// if it has,  set store state to the one in local storage
+					} else {
+						console.log("storageKey:", storageKey)
+						const currentCharacter = JSON.parse(window.localStorage.getItem(storageKey));
+						console.log("currentChar:", currentCharacter);
+						const isFavorite = currentCharacter.favorite;
+						console.log("isFavorite: ", isFavorite);
+						setFavorite(item, isFavorite);
+
+					}
+
+				});
 
 				setCharacters(fetchedArray);
 			})

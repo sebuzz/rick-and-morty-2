@@ -1,5 +1,5 @@
 import create from "zustand";
-import { devtools } from "zustand/middleware";
+
 
 // const characters = useStore(state => state.characters);
 // const store = set => ({
@@ -19,12 +19,33 @@ export const useStore = create(set => ({
 			characters: [...state.characters, ...characters],
 		}));
 	},
-	updateCharacter: (character) => {
+	toggleFavorite: (character) => {
 
-		console.log("updating character: ", character);
+		console.log("toggling character favorite: ", character);
 		character.favorite = (!character.favorite);
-		// console.log("character favorite: ", characters.id.favorite);
-	}
+		console.log("character",character.name,"is favorite: ", character.favorite);
+	},
+	setFavorite: (character, bool) => {
+		console.log("setting character favorite: ", character);
+		character.favorite = bool;
+	},
+	counter: 0,
+	increment: () => {
+		set((state) => ({
+			counter: state.counter + 1,
+		}));
+	},
+	decrement: () => {
+		// No return
+		// Side effect  (update)
+		set((state) => {
+			// Returns a partial (new state)
+			return {
+				counter: state.counter - 1,
+			};
+		});
+	},
+
 }));
 
 // const useStore = create(devtools(store));
